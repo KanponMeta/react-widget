@@ -1,0 +1,49 @@
+$proportion: 1;
+
+// 组件之间的间隔
+$component-gap: 16px * $proportion;
+
+// 组件内部的间隔
+$component-gap-inner: 8px * $proportion;
+
+// 组件圆角
+$component-radius: 23px * $proportion;
+
+// 组件内部margin
+$component-margin: 16px * $proportion;
+
+$component-margin-half: 8px * $proportion;
+
+$component-margin-wider: 32px * $proportion;
+
+// 填空组件标准高度
+$component-input-height: 54px * $proportion;
+
+// 填空组件标准宽度
+$component-input-size: 27px * $proportion;
+
+// 卡片高度
+$card-height: 140px * $proportion;
+
+// 卡片宽度
+$card-weight: 153px * $proportion;
+
+$card-header-font-size: 30px * $proportion;
+$card-body-font-size: 56px * $proportion;
+$card-bottom-font-size: 22px * $proportion;
+
+$card-scroll-height: 500px * $proportion;
+
+$chart-title-font-size: 18px * $proportion;
+
+// 组件内部padding
+$component-padding: 32px * $proportion;
+
+// 组件标准字号
+$component-font-size: 18px * $proportion;
+
+// 组件标准big字号
+$component-font-size-big: 36px * $proportion;
+
+// 组件标准small字号
+$component-font-size-small: 14px * $proportion;

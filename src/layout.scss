@@ -1,0 +1,30 @@
+$nav-size-height: 11%;
+$footer-size-height: 6%;
+$layout-max-width: 1100px;
+
+.layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("./assets/background.png");
+  background-repeat: no-repeat;
+}
+
+.layout-header {
+  width: 100%;
+  height: $nav-size-height;
+}
+
+.layout-content {
+  width: 96%;
+  height: 100% - $nav-size-height - $footer-size-height;
+}
+
+.layout-footer {
+  width: 100%;
+  height: $footer-size-height;
+  justify-content: center;
+}
