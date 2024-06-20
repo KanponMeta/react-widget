@@ -1,10 +1,15 @@
 import cs from "classnames";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 import "./style/index.scss";
+import { Dispatch } from "react";
 
-function Navbar() {
-  const navigate = useNavigate();
+interface NavbarProps {
+  setRoute: Dispatch<React.SetStateAction<string>>
+}
+
+function Navbar(props: NavbarProps) {
+  // const navigate = useNavigate();
 
   const routes = [
     {
@@ -43,7 +48,7 @@ function Navbar() {
             index > 2 && "navbar-right-item"
           )}
           key={index}
-          onClick={() => navigate(route.path)}
+          onClick={() => props.setRoute(route.name)}
         >
           {route.title}
         </div>

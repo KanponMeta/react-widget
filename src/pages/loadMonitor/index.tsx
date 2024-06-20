@@ -369,6 +369,30 @@ const Process: React.FC<{ data: any[] }> = () => {
     };
   }, [loadType]);
 
+  useEffect(() => {
+
+    console.log("zoho.", ZOHO.CREATOR.API);
+
+    const initparams = ZOHO.CREATOR.UTIL.getInitParams();
+    console.log("ZOHO.CREATOR.UTIL", initparams)
+
+    const config = {
+      reportName: "NF025_process_fuzai_production_statistics_Report",
+      page: 1,
+      pageSize: 200,
+    };
+
+    console.log("getProductLoadData-config", config);
+
+    const getRecords = ZOHO.CREATOR.API.getAllRecords(config);
+    getRecords.then(function (jsonData: any) {
+      console.log("getRecords Response: ", jsonData);
+    }).catch(function (err: any) {
+      console.log("getRecords Error: ", err);
+    });
+
+  }, []);
+
   return (
     <div className="process">
       <div className="process-title">各工序今日生产情况</div>

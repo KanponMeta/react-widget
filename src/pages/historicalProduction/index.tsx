@@ -179,6 +179,25 @@ const ProductionStaffStatistic: React.FC = () => {
   const barRef = useRef(null);
 
   useEffect(() => {
+
+    const config = {
+      reportName: "NF025_process_fuzai_production_statistics_Report",
+      page: 1,
+      pageSize: 200,
+    };
+
+    console.log("getProductLoadData2-config", config);
+
+    const getRecords = ZOHO.CREATOR.API.getAllRecords(config);
+    getRecords.then(function (jsonData: any) {
+      console.log("getRecords Response2: ", jsonData);
+    }).catch(function (err: any) {
+      console.log("getRecords Error: ", err);
+    });
+
+  }, []);
+
+  useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
     const createChart = () => {

@@ -5,12 +5,6 @@ import { GlobalContext } from "./context";
 
 import PageLayout from "@/layout";
 
-// const router = createHashRouter([
-//   {
-//     path: "/",
-//     Component: Home,
-//   },
-// ]);
 
 const App: React.FC = () => {
   const [tab, setTab] = useState("load");

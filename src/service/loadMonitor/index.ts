@@ -9,37 +9,42 @@ export interface ProcessLoad {
 export async function getProductLoadData(): Promise<
   NormalResponse<ProcessLoad[]>
 > {
-  const config = {
-    reportName: "NF025_process_fuzai_production_statistics_Report",
-    page: 1,
-    pageSize: 200,
-  };
+  // const config = {
+  //   reportName: "NF025_process_fuzai_production_statistics_Report",
+  //   page: 1,
+  //   pageSize: 200,
+  // };
 
-  console.log("getProductLoadData-config", config);
+  // console.log("getProductLoadData-config", config);
 
-  console.log("ZOHO.CREATOR.API");
-  console.log(ZOHO.CREATOR.API);
+  // console.log("ZOHO.CREATOR.API");
+  // console.log(ZOHO.CREATOR.API);
 
-  ZOHO.CREATOR.API.getAllRecords(config)
-    .then((response: any) => {
-      console.log("getProductLoadData-reponse", config);
-      const productLoads: ProcessLoad[] = response.data.map(
-        (item: any, index: number) => {
-          return {
-            id: index,
-            process: item.process,
-            loadCount: item.process_real_time_fuzai_count,
-            loadMeter: item.process_real_time_fuzai_meters,
-            loadWeight: item.process_total_fuzai_weight,
-          };
-        }
-      );
+  // const getRecords = ZOHO.CREATOR.API.getAllRecords(config);
+  // getRecords.then(function (jsonData: any) {
+  //   console.log("Response: ", jsonData);
+  // })
 
-      console.log("productLoads", productLoads);
-    })
-    .catch((error: any) => {
-      console.log("productLoads-error", error);
-    });
+  // ZOHO.CREATOR.API.getAllRecords(config)
+  //   .then((response: any) => {
+  //     console.log("getProductLoadData-reponse", config);
+  //     const productLoads: ProcessLoad[] = response.data.map(
+  //       (item: any, index: number) => {
+  //         return {
+  //           id: index,
+  //           process: item.process,
+  //           loadCount: item.process_real_time_fuzai_count,
+  //           loadMeter: item.process_real_time_fuzai_meters,
+  //           loadWeight: item.process_total_fuzai_weight,
+  //         };
+  //       }
+  //     );
+
+  //     console.log("productLoads", productLoads);
+  //   })
+  //   .catch((error: any) => {
+  //     console.log("productLoads-error", error);
+  //   });
 
   return new Promise((resolve) => {
     resolve({
