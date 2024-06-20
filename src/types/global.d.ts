@@ -1,5 +1,5 @@
 declare namespace ZOHO {
-  export const CREATOR: unknown;
+  export const CREATOR: any;
 }
 
 declare interface NormalResponse<T> {

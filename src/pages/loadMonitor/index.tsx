@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { getProcessBarData } from "./data/handleProcessData";
+import {
+  ProductLoadType,
+  generateProcessBarOption,
+} from "./data/handleProcessLoad";
 import {
   getMachineProductCountBarData,
   getMachineProductDurationPieData,
@@ -318,7 +321,8 @@ const Statistic: React.FC = () => {
 };
 
 const Process: React.FC<{ data: any[] }> = () => {
-  const loadTypeMap = [
+  const [loadType, setLoadType] = useState<ProductLoadType>("loadCount");
+  const loadTypeMap: { key: ProductLoadType; value: string }[] = [
     {
       key: "loadCount",
       value: "负载支数",
@@ -338,18 +342,11 @@ const Process: React.FC<{ data: any[] }> = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = () => {
+    const createChart = (options: any) => {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
 
-      // 使用配置项绘制图表
-      const tmpData = [
-        {
-          name: "工序1",
-          value: 110,
-        },
-      ];
-      chartInstance.setOption(getProcessBarData(tmpData));
+      chartInstance.setOption(options);
     };
 
     const destroyChart = () => {
@@ -359,19 +356,29 @@ const Process: React.FC<{ data: any[] }> = () => {
       }
     };
 
-    createChart();
+    generateProcessBarOption(loadType)
+      .then((options) => {
+        createChart(options);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
 
     return () => {
       destroyChart();
     };
-  }, []);
+  }, [loadType]);
 
   return (
     <div className="process">
       <div className="process-title">各工序今日生产情况</div>
       <div className="process-operator">
         {loadTypeMap.map((item) => (
-          <div key={item.key} className="process-operator-item">
+          <div
+            key={item.key}
+            className="process-operator-item"
+            onClick={() => setLoadType(item.key)}
+          >
             {item.value}
           </div>
         ))}
@@ -382,6 +389,7 @@ const Process: React.FC<{ data: any[] }> = () => {
     </div>
   );
 };
+
 const LoadMonitor = () => {
   return (
     <div className="load-monitor">

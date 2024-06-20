@@ -1,9 +1,11 @@
 import cs from "classnames";
+import { useNavigate } from "react-router";
 
 import "./style/index.scss";
 
-function Navbar({ show }: { show: boolean }) {
-  console.log(show);
+function Navbar() {
+  const navigate = useNavigate();
+
   const routes = [
     {
       title: "负载监控",
@@ -41,6 +43,7 @@ function Navbar({ show }: { show: boolean }) {
             index > 2 && "navbar-right-item"
           )}
           key={index}
+          onClick={() => navigate(route.path)}
         >
           {route.title}
         </div>

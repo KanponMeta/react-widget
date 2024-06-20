@@ -1,421 +1,98 @@
 @import "@/styles/layout.scss";
 @import "@/styles/color.scss";
 
-$tag-height: 20px;
-$title-fontsize: 20px;
-
-.home {
-  width: 100vw;
-  height: 100vh;
+.historical-production {
+  width: 100%;
+  height: 98%;
+  padding: 1%;
   display: flex;
   flex-direction: column;
-  background-image: url("../assets/home/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  justify-content: space-between;
+  align-items: center;
 
-  &-header {
-    height: 8vh;
+  &-top {
+    width: 100%;
+    height: 49%;
+    margin-bottom: 2%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-    &-selected {
-      margin-left: $component-margin-wider;
-    }
-
-    &-title {
-      font-size: 35px;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #2993f9;
-      text-align: left;
-    }
-
-    &-time {
-      margin-right: $component-margin-wider;
-      font-size: $component-font-size;
-      font-weight: bold;
-      color: #0f5baa;
-    }
   }
 
-  &-main {
-    margin: 0 $component-margin-wider;
-    height: 90vh;
+  &-bottom {
+    width: 100%;
+    height: 49%;
     display: flex;
-    flex-direction: column;
-
-    &-content1 {
-      width: 100%;
-      height: 35vh;
-      display: flex;
-      flex-direction: row;
-    }
-
-    &-content2 {
-      margin-top: $component-margin-wider;
-      width: 100%;
-      height: 50vh;
-      display: flex;
-      flex-direction: row;
-    }
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
-.product-schedule {
+.historical-production-count {
+  width: 32%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
-  height: 100%;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
+  background: $background-color;
+  box-shadow: 0px 3px 10px 0px rgba(0, 120, 255, 0.4);
+  border-radius: 4px;
 
-  &-tag {
+  &-title {
     width: 100%;
-    height: $tag-height;
-    display: flex;
-
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
-    }
+    text-align: center;
+    line-height: 2 * $chart-title-font-size;
+    font-size: $chart-title-font-size;
+    font-family: "PingFang SC";
+    font-weight: bold;
+    color: #00e4ff;
+    background-image: url("../../assets/title.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-echart1 {
-      width: 100%;
-      height: calc((100% - $title-fontsize) * 2 / 3);
-
-      &-pie {
-        height: 100%;
-      }
-    }
-
-    &-echart2 {
-      width: 100%;
-      height: calc((100% - $title-fontsize) * 1 / 3);
-
-      &-bar {
-        height: 100%;
-      }
-    }
-  }
-}
-
-.process {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: calc(30% - 2 * $component-margin-wider);
-  height: 100%;
-  margin: 0 $component-margin-wider;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
-
-  &-tag {
+  &-echart {
     width: 100%;
-    height: $tag-height;
-    display: flex;
+    height: 80%;
 
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
-    }
-  }
-
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-echart {
-      width: 100%;
-      height: calc(100% - $title-fontsize);
-
-      &-bar {
-        height: 100%;
-      }
-    }
-  }
-}
-
-.material {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
-
-  &-tag {
-    width: 100%;
-    height: $tag-height;
-    display: flex;
-
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
-    }
-  }
-
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-echarts {
-      display: flex;
-      flex-direction: row;
+    &-bar {
       height: 100%;
-
-      &-left {
-        width: 50%;
-        height: 100%;
-
-        &-bar {
-          height: 100%;
-        }
-      }
-
-      &-right {
-        width: 50%;
-        height: 100%;
-
-        &-pie {
-          height: 100%;
-        }
-      }
     }
   }
 }
 
-.product {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30%;
+.historical-production-staff-statistic,
+.historical-production-machine-statistic {
+  width: 49%;
   height: 100%;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
-
-  &-tag {
-    width: 100%;
-    height: $tag-height;
-    display: flex;
-
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
-    }
-  }
-
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-echart {
-      width: 100%;
-      height: calc(100% - $title-fontsize);
-
-      &-bar {
-        height: 100%;
-      }
-    }
-  }
-}
-
-.machine {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(40% - 2 * $component-margin-wider);
-  height: 100%;
-  margin: 0 $component-margin-wider;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
+  background: $background-color;
+  box-shadow: 0px 3px 10px 0px rgba(0, 120, 255, 0.4);
+  border-radius: 4px;
 
-  &-tag {
+  &-title {
     width: 100%;
-    height: $tag-height;
-    display: flex;
-
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
-    }
+    text-align: center;
+    line-height: 2 * $chart-title-font-size;
+    font-size: $chart-title-font-size;
+    font-family: "PingFang SC";
+    font-weight: bold;
+    color: #00e4ff;
+    background-image: url("../../assets/title.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-progress {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      flex-wrap: wrap;
-
-      margin-top: $component-margin-half;
-      margin-left: 20px;
-      width: 100%;
-      height: calc(100% - $title-fontsize);
-    }
-  }
-}
-
-.machine-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: 20px;
-
-  &-content {
-    position: relative;
-    top: -15px;
-
-    &-process {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      padding: 2px 10px;
-      font-size: 16px;
-      background-color: #1e2c5c;
-      border: 1px solid #234b9e;
-      border-radius: 13px;
-      color: #fff;
-    }
-
-    &-production {
-      margin-top: 5px;
-      font-size: 12px;
-      color: #fff;
-    }
-
-    &-capacity {
-      font-size: 12px;
-      color: #fff;
-    }
-  }
-}
-
-.operator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30%;
-  height: 100%;
-  background-color: #0a0c37;
-  border: 1px solid #181f64;
-
-  &-tag {
+  &-echart {
     width: 100%;
-    height: $tag-height;
-    display: flex;
+    height: 80%;
 
-    &-content {
-      width: 0;
-      height: 0;
-      border-width: 0 0 $tag-height $tag-height;
-      border-style: solid;
-      border-color: transparent #0f52e7 transparent;
+    &-bar {
+      height: 100%;
     }
   }
-
-  &-content {
-    width: calc(100% - 2 * $component-margin);
-    height: calc(100% - $tag-height);
-    margin: 0 $component-margin;
-    display: flex;
-    flex-direction: column;
-
-    &-title {
-      font-size: $title-fontsize;
-      font-family: PingFang SC;
-      font-weight: bold;
-      color: #278ef9;
-    }
-
-    &-echart {
-      width: 100%;
-      height: calc(100% - $title-fontsize);
-
-      &-bar {
-        height: 100%;
-      }
-    }
-  }
-}
-
-:where(.css-dev-only-do-not-override-1m5av28).ant-select .ant-select-arrow {
-  color: #fff;
 }

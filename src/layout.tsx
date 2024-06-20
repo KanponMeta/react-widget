@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-
 import { Layout } from "antd";
-import LoadMonitor from "@/pages/loadMonitor";
+
+import Routes from "@/routes";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
@@ -11,17 +10,10 @@ function PageLayout() {
   return (
     <Layout className="layout">
       <div className="layout-header">
-        <Navbar show />
+        <Navbar />
       </div>
       <div className="layout-content">
-        <Routes>
-          <Route path="/" element={<Navigate to="/loadMonitor" />}></Route>
-          <Route path="/loadMonitor" element={<LoadMonitor />}></Route>
-          {/* <Route
-            path="*"
-            element={lazy(() => import("./pages/exception/403"))}
-          /> */}
-        </Routes>
+        <Routes />
       </div>
       <div className="layout-footer">
         <Footer />

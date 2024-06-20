@@ -4,7 +4,7 @@ import App from "./App";
 import "./main.scss";
 
 window.onload = () => {
-  // ZOHO.CREATOR.init().then(() => {
+  ZOHO.CREATOR.init().then(() => {
     const root = ReactDOM.createRoot(
       document.getElementById("root") as HTMLElement
     );
@@ -13,5 +13,5 @@ window.onload = () => {
         <App />
       </React.StrictMode>
     );
-  // });
+  });
 };
