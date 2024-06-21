@@ -23,7 +23,7 @@ function Navbar(props: NavbarProps) {
       path: "/historicalProduction",
     },
     {
-      title: "管理车间MES生产系统智慧看板",
+      title: "数字化生产系统智能监控平台",
       name: "home",
       path: "/home",
     },

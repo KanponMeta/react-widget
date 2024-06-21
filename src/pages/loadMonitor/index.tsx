@@ -8,6 +8,7 @@ import {
   getMachineProductCountBarData,
   getMachineProductDurationPieData,
 } from "./data/handleMachineData";
+import { getLoadMonitorStatistic } from "@/service/loadMonitor/index";
 
 import { EChartsType } from "echarts/core";
 import { echartsInstance } from "@/components/Echart";
@@ -252,33 +253,19 @@ const ProductWeight: React.FC = () => {
 };
 
 const Statistic: React.FC = () => {
-  const items: DescriptionsProps["items"] = [
-    {
-      key: "1",
-      label: "总负载支数",
-      children: "85",
-    },
-    {
-      key: "2",
-      label: "总负载重量（吨）",
-      children: "5.6W",
-    },
-    {
-      key: "3",
-      label: "今日产出合格率",
-      children: "90%",
-    },
-    {
-      key: "4",
-      label: "今日报废支数",
-      children: "6",
-    },
-    {
-      key: "5",
-      label: "剩余负载生产时间",
-      children: "12D16H",
-    },
-  ];
+  const [items, setItems] = useState<DescriptionsProps["items"]>([]);
+
+  useEffect(() => {
+    getLoadMonitorStatistic("冷轧")
+      .then((res) => {
+        setItems(res.data);
+        console.log("Statistic", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="statistic">
       <div className="statistic-title">各设备今日产出重量</div>
@@ -358,6 +345,7 @@ const Process: React.FC<{ data: any[] }> = () => {
 
     generateProcessBarOption(loadType)
       .then((options) => {
+        console.log("Process", options);
         createChart(options);
       })
       .catch((err: any) => {
@@ -368,30 +356,6 @@ const Process: React.FC<{ data: any[] }> = () => {
       destroyChart();
     };
   }, [loadType]);
-
-  useEffect(() => {
-
-    console.log("zoho.", ZOHO.CREATOR.API);
-
-    const initparams = ZOHO.CREATOR.UTIL.getInitParams();
-    console.log("ZOHO.CREATOR.UTIL", initparams)
-
-    const config = {
-      reportName: "NF025_process_fuzai_production_statistics_Report",
-      page: 1,
-      pageSize: 200,
-    };
-
-    console.log("getProductLoadData-config", config);
-
-    const getRecords = ZOHO.CREATOR.API.getAllRecords(config);
-    getRecords.then(function (jsonData: any) {
-      console.log("getRecords Response: ", jsonData);
-    }).catch(function (err: any) {
-      console.log("getRecords Error: ", err);
-    });
-
-  }, []);
 
   return (
     <div className="process">
