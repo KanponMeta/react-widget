@@ -1,5 +1,6 @@
 import request from "../request";
 import { DescriptionsProps } from "antd";
+
 export interface ProcessLoad {
   id: number;
   process: string;
@@ -8,7 +9,7 @@ export interface ProcessLoad {
   loadWeight: number;
 }
 
-export async function getProductLoadData(): Promise<
+export async function getProductLoadProcessData(): Promise<
   NormalResponse<ProcessLoad[]>
 > {
   let response: any = null;
@@ -55,7 +56,7 @@ export async function getProductLoadData(): Promise<
   });
 }
 
-export async function getLoadMonitorStatistic(
+export async function getLoadMonitorStatisticData(
   processType: string
 ): Promise<NormalResponse<DescriptionsProps["items"]>> {
   let response: any = null;
@@ -127,6 +128,230 @@ export async function getLoadMonitorStatistic(
   return new Promise((resolve) => {
     resolve({
       data: items,
+      success: true,
+      type: "success",
+    });
+  });
+}
+
+export interface ProductionDuration {
+  process: string;
+  equipment: string;
+  duration: string;
+}
+
+export async function getLoadMonitorProductioDurationData(
+  processType: string
+): Promise<NormalResponse<ProductionDuration[]>> {
+  let response: any = null;
+
+  if (process.env.NODE_ENV === "production") {
+    const config = {
+      reportName: "NF026_equipment_fuzai_production_statistics_Report",
+      criteria: `(process== "${processType}")`,
+      page: 1,
+      pageSize: 100,
+    };
+
+    response = await ZOHO.CREATOR.API.getAllRecords(config);
+  } else {
+    const responseObj = await request.get(
+      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
+    );
+
+    response = responseObj.data;
+  }
+
+  const { code, data } = response;
+
+  if (code !== 3000) {
+    return new Promise((_, reject) => {
+      reject("getLoadMonitorProductioDurationData error");
+    });
+  }
+
+  const productionDurations: ProductionDuration[] = data?.map(
+    (item: any): ProductionDuration => {
+      return {
+        process: item.process || "",
+        equipment: item.equipment || "",
+        duration: item.today_total_production_time || "",
+      };
+    }
+  );
+
+  return new Promise((resolve) => {
+    resolve({
+      data: productionDurations,
+      success: true,
+      type: "success",
+    });
+  });
+}
+
+export interface ProductionCount {
+  process: string;
+  equipment: string;
+  count: string;
+}
+
+export async function getLoadMonitorProductCountData(
+  processType: string
+): Promise<NormalResponse<ProductionCount[]>> {
+  let response: any = null;
+
+  if (process.env.NODE_ENV === "production") {
+    const config = {
+      reportName: "NF026_equipment_fuzai_production_statistics_Report",
+      criteria: `(process== "${processType}")`,
+      page: 1,
+      pageSize: 100,
+    };
+
+    response = await ZOHO.CREATOR.API.getAllRecords(config);
+  } else {
+    const responseObj = await request.get(
+      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
+    );
+
+    response = responseObj.data;
+  }
+
+  const { code, data } = response;
+
+  if (code !== 3000) {
+    return new Promise((_, reject) => {
+      reject("getLoadMonitorProductCountData error");
+    });
+  }
+
+  const productionCounts: ProductionCount[] = data?.map(
+    (item: any): ProductionCount => {
+      return {
+        process: item.process || "",
+        equipment: item.equipment || "",
+        count: item.today_checkout_count || "",
+      };
+    }
+  );
+
+  return new Promise((resolve) => {
+    resolve({
+      data: productionCounts,
+      success: true,
+      type: "success",
+    });
+  });
+}
+
+export interface ProductionWeight {
+  process: string;
+  equipment: string;
+  weight: string;
+}
+export async function getLoadMonitorProductWeightData(
+  processType: string
+): Promise<NormalResponse<ProductionWeight[]>> {
+  let response: any = null;
+
+  if (process.env.NODE_ENV === "production") {
+    const config = {
+      reportName: "NF026_equipment_fuzai_production_statistics_Report",
+      criteria: `(process== "${processType}")`,
+      page: 1,
+      pageSize: 100,
+    };
+
+    response = await ZOHO.CREATOR.API.getAllRecords(config);
+  } else {
+    const responseObj = await request.get(
+      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
+    );
+
+    response = responseObj.data;
+  }
+
+  const { code, data } = response;
+
+  if (code !== 3000) {
+    return new Promise((_, reject) => {
+      reject("error");
+    });
+  }
+
+  const productionCounts: ProductionWeight[] = data?.map(
+    (item: any): ProductionWeight => {
+      return {
+        process: item.process || "",
+        equipment: item.equipment || "",
+        weight: item.today_checkout_weight || "",
+      };
+    }
+  );
+
+  return new Promise((resolve) => {
+    resolve({
+      data: productionCounts,
+      success: true,
+      type: "success",
+    });
+  });
+}
+
+export interface ProcessCard {
+  id: string; //工艺卡号
+  machine: string; //作业机台
+  count: string; //生产支数
+  weight: string; //生产重量
+  time: string; //进站时间
+  process: string; //设备所属工序
+  material: string; //物料类型
+}
+
+export async function getLoadMonitorProcessCardData(
+  processType: string
+): Promise<NormalResponse<ProcessCard[]>> {
+  let response: any = null;
+
+  if (process.env.NODE_ENV === "production") {
+    const config = {
+      reportName: "NS001_GYK_Process_Scanning_Report",
+      criteria: `(material_type == "生产中" &&Process== "${processType}")`,
+      page: 1,
+      pageSize: 100,
+    };
+
+    response = await ZOHO.CREATOR.API.getAllRecords(config);
+  } else {
+    const responseObj = await request.get(
+      `/NS001_GYK_Process_Scanning_Report?Process=${processType}&material_type=生产中`
+    );
+
+    response = responseObj.data;
+  }
+
+  const { code, data } = response;
+
+  if (code !== 3000) {
+    return new Promise((_, reject) => {
+      reject("error");
+    });
+  }
+
+  const processCards: ProcessCard[] = data?.map((item: any): ProcessCard => {
+    return {
+      id: item?.process_card_no || "",
+      machine: item?.working_machine || "",
+      count: item?.subbatches_number || "",
+      weight: item?.theoretical_weight || "",
+      time: item?.production_start_time || "",
+      process: item?.Process || "",
+      material: item?.material_type || "",
+    };
+  });
+  return new Promise((resolve) => {
+    resolve({
+      data: processCards,
       success: true,
       type: "success",
     });

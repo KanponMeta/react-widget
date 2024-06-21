@@ -1,12 +1,15 @@
 import type { ECOption } from "@/components/Echart/index";
-import { ProcessLoad, getProductLoadData } from "@/service/loadMonitor/index";
+import {
+  ProcessLoad,
+  getProductLoadProcessData,
+} from "@/service/loadMonitor/index";
 
 export type ProductLoadType = "loadCount" | "loadMeter" | "loadWeight";
 
 export const generateProcessBarOption = async (
   type: ProductLoadType
 ): Promise<ECOption> => {
-  const { data } = await getProductLoadData();
+  const { data } = await getProductLoadProcessData();
 
   const barData = data.map((item: ProcessLoad) => {
     return {

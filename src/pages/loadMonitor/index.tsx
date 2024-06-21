@@ -5,10 +5,15 @@ import {
   generateProcessBarOption,
 } from "./data/handleProcessLoad";
 import {
-  getMachineProductCountBarData,
-  getMachineProductDurationPieData,
+  getMachineProductCountBarOption,
+  getMachineProductWeightBarOption,
+  getMachineProductDurationPieOption,
 } from "./data/handleMachineData";
-import { getLoadMonitorStatistic } from "@/service/loadMonitor/index";
+import {
+  getLoadMonitorStatisticData,
+  ProcessCard as ProcessCardType,
+  getLoadMonitorProcessCardData,
+} from "@/service/loadMonitor/index";
 
 import { EChartsType } from "echarts/core";
 import { echartsInstance } from "@/components/Echart";
@@ -23,15 +28,7 @@ import {
 import "./index.scss";
 
 const ProcessCard: React.FC = () => {
-  interface DataType {
-    id: string;
-    machine: string;
-    count: string;
-    weight: string;
-    time: string;
-  }
-
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<ProcessCardType>["columns"] = [
     {
       title: "工艺卡号",
       dataIndex: "id",
@@ -59,50 +56,13 @@ const ProcessCard: React.FC = () => {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      id: "24-05-144",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-    {
-      id: "24-05-145",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-    {
-      id: "24-05-146",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-    {
-      id: "24-05-147",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-    {
-      id: "24-05-148",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-    {
-      id: "24-05-149",
-      machine: "设备1",
-      count: "36支",
-      weight: "4500kg",
-      time: "2024.5.14 09:01:49",
-    },
-  ];
+  const [data, setData] = useState<ProcessCardType[]>([]);
+
+  useEffect(() => {
+    getLoadMonitorProcessCardData("拉拔").then((res) => {
+      setData(res.data);
+    });
+  }, []);
 
   return (
     <div className="product-card">
@@ -144,12 +104,12 @@ const ProductDuration: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = () => {
+    const createChart = (option: any) => {
       const chartElement = pieRef.current;
       chartInstance = echartsInstance.init(chartElement);
 
       // 使用配置项绘制图表
-      chartInstance.setOption(getMachineProductDurationPieData());
+      chartInstance.setOption(option);
     };
 
     const destroyChart = () => {
@@ -159,7 +119,9 @@ const ProductDuration: React.FC = () => {
       }
     };
 
-    createChart();
+    getMachineProductDurationPieOption().then((option) => {
+      createChart(option);
+    });
 
     return () => {
       destroyChart();
@@ -182,11 +144,11 @@ const ProductCount: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = () => {
+    const createChart = (option: any) => {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
 
-      chartInstance.setOption(getMachineProductCountBarData());
+      chartInstance.setOption(option);
     };
 
     const destroyChart = () => {
@@ -196,7 +158,9 @@ const ProductCount: React.FC = () => {
       }
     };
 
-    createChart();
+    getMachineProductCountBarOption().then((option) => {
+      createChart(option);
+    });
 
     return () => {
       destroyChart();
@@ -219,13 +183,13 @@ const ProductWeight: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = () => {
+    const createChart = (option: any) => {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
 
       // 使用配置项绘制图表
-
-      chartInstance.setOption(getMachineProductCountBarData());
+      console.log("createChart", option);
+      chartInstance.setOption(option);
     };
 
     const destroyChart = () => {
@@ -235,7 +199,9 @@ const ProductWeight: React.FC = () => {
       }
     };
 
-    createChart();
+    getMachineProductWeightBarOption().then((option) => {
+      createChart(option);
+    });
 
     return () => {
       destroyChart();
@@ -256,7 +222,7 @@ const Statistic: React.FC = () => {
   const [items, setItems] = useState<DescriptionsProps["items"]>([]);
 
   useEffect(() => {
-    getLoadMonitorStatistic("冷轧")
+    getLoadMonitorStatisticData("冷轧")
       .then((res) => {
         setItems(res.data);
         console.log("Statistic", res.data);
@@ -298,7 +264,7 @@ const Statistic: React.FC = () => {
           contentStyle={{
             width: "100%",
             color: "#00d8ff",
-            fontSize: "50px",
+            fontSize: "40px",
             fontWeight: "bold",
           }}
         />
