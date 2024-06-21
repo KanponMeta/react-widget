@@ -1,58 +1,33 @@
+import { useContext } from "react";
+import { GlobalContext } from "@/context";
+
 import cs from "classnames";
-// import { useNavigate } from "react-router";
-
 import "./style/index.scss";
-import { Dispatch } from "react";
 
-interface NavbarProps {
-  setRoute: Dispatch<React.SetStateAction<string>>
-}
+function Navbar() {
+  const { navigate, routes } = useContext(GlobalContext);
 
-function Navbar(props: NavbarProps) {
-  // const navigate = useNavigate();
-
-  const routes = [
-    {
-      title: "负载监控",
-      name: "loadMonitor",
-      path: "/loadMonitor",
-    },
-    {
-      title: "历史生产",
-      name: "historicalProduction",
-      path: "/historicalProduction",
-    },
-    {
-      title: "数字化生产系统智能监控平台",
-      name: "home",
-      path: "/home",
-    },
-    {
-      title: "员工扫描",
-      name: "employeeScanner",
-      path: "/employeeScanner",
-    },
-    {
-      title: "转运信息",
-      name: "transferInfo",
-      path: "/transferInfo",
-    },
-  ];
   return (
     <div className="navbar">
-      {routes.map((route, index) => (
-        <div
-          className={cs(
-            "navbar-middle",
-            index < 2 && "navbar-left-item",
-            index > 2 && "navbar-right-item"
-          )}
-          key={index}
-          onClick={() => props.setRoute(route.name)}
-        >
-          {route.title}
-        </div>
-      ))}
+      {routes.map((route, index) => {
+        if (route?.name && route?.name !== "" && route?.name !== undefined) {
+          return (
+            <div
+              className={cs(
+                "navbar-middle",
+                index < 2 && "navbar-left-item",
+                index > 2 && "navbar-right-item"
+              )}
+              key={index}
+              onClick={() => navigate(route.path)}
+            >
+              {route.title}
+            </div>
+          );
+        }
+
+        return null;
+      })}
     </div>
   );
 }

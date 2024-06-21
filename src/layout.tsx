@@ -1,34 +1,28 @@
 import { useState } from "react";
 import { Layout } from "antd";
 
-// import Routes from "@/routes";
+import { DEFAULT_ROUTE, useRoute, routes } from "@/routes";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import LoadMonitor from "@/pages/loadMonitor";
-import HistoricalProduction from "@/pages/historicalProduction";
+import { GlobalContext } from "@/context";
 
 import "./layout.scss";
 
 function PageLayout() {
-  const [route, setRoute] = useState<string>("loadMonitor");
+  const [route, setRoute] = useState<string>(DEFAULT_ROUTE);
 
   return (
-    <Layout className="layout">
-      <div className="layout-header">
-        <Navbar setRoute={setRoute} />
-      </div>
-      <div className="layout-content">
-        {
-          route === "loadMonitor" && (<LoadMonitor />)
-        }
-        {
-          route === "historicalProduction" && (<HistoricalProduction />)
-        }
-      </div>
-      <div className="layout-footer">
-        <Footer />
-      </div>
-    </Layout>
+    <GlobalContext.Provider value={{ route, navigate: setRoute, routes }}>
+      <Layout className="layout">
+        <div className="layout-header">
+          <Navbar />
+        </div>
+        <div className="layout-content">{useRoute(route)}</div>
+        <div className="layout-footer">
+          <Footer />
+        </div>
+      </Layout>
+    </GlobalContext.Provider>
   );
 }
 

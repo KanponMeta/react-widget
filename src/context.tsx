@@ -1,6 +1,11 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 export const GlobalContext = createContext<{
-  tab?:string;
-  setTab?: (tab:string) => void
-}>({});
+  route: string;
+  routes: any[];
+  navigate: (path: string) => void;
+}>({
+  route: "",
+  routes: [],
+  navigate: () => {},
+});

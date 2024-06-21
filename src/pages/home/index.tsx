@@ -1,7 +1,7 @@
 import React from "react";
 
-const TransferInformation: React.FC = () => {
-  return <></>;
+const Home: React.FC = () => {
+  return <div>主页</div>;
 };
 
-export default TransferInformation;
+export default Home;

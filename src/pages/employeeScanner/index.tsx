@@ -1,7 +1,7 @@
 import React from "react";
 
-const TransferInformation: React.FC = () => {
-  return <></>;
+const EmployeeScanner: React.FC = () => {
+  return <div>员工扫描</div>;
 };
 
-export default TransferInformation;
+export default EmployeeScanner;

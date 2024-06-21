@@ -1,19 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ConfigProvider } from "antd";
 import { BrowserRouter } from "react-router-dom";
-import { GlobalContext } from "./context";
 
 import PageLayout from "@/layout";
 
-
 const App: React.FC = () => {
-  const [tab, setTab] = useState("load");
-
-  const contextValue = {
-    tab,
-    setTab,
-  };
-
   return (
     <BrowserRouter>
       <ConfigProvider
@@ -29,9 +20,7 @@ const App: React.FC = () => {
           }
         }
       >
-        <GlobalContext.Provider value={contextValue}>
-          <PageLayout />
-        </GlobalContext.Provider>
+        <PageLayout />
       </ConfigProvider>
     </BrowserRouter>
   );
