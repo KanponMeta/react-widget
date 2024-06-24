@@ -1,4 +1,4 @@
-import request from "../request";
+import request from "../zetRequest";
 
 export interface ProductionStatistic {
   day: string;
@@ -15,30 +15,11 @@ export interface ProductionStatistic {
 export async function getDailyProductionStatistic(): Promise<
   NormalResponse<ProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_daily_equipment_output_statistical",
-      criteria: '(limit == "15" && process == "冷轧" && equipment == "90轧机")',
-      page: 1,
-      pageSize: 20,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF026_daily_equipment_output_statistical",
-      {
-        params: {
-          limit: "15",
-          process: "冷轧",
-          equipment: "90轧机",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF026_daily_equipment_output_statistical", {
+    limit: "15",
+    process: "冷轧",
+    equipment: "90轧机",
+  });
 
   const { code, data, message, description } = response;
 
@@ -76,31 +57,11 @@ export async function getDailyProductionStatistic(): Promise<
 export async function getMonthProductionStatistic(): Promise<
   NormalResponse<ProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_monthly_equipment_output_statistical",
-      criteria:
-        '(statistical_month== "5" && process == "内外涂" && equipment == "南涂料")',
-      page: 1,
-      pageSize: 20,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF026_monthly_equipment_output_statistical",
-      {
-        params: {
-          statistical_month: "15",
-          process: "内外涂",
-          equipment: "南涂料",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF026_monthly_equipment_output_statistical", {
+    statistical_month: "15",
+    process: "内外涂",
+    equipment: "南涂料",
+  });
 
   const { code, data, message, description } = response;
 
@@ -149,29 +110,10 @@ export interface StaffProductionStatistic {
 export async function getDailyStaffProductionStatistic(): Promise<
   NormalResponse<StaffProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF012_Employees_daily_statistics_Report",
-      criteria: '(limit == "15" && worker_name = "徐斌")',
-      page: 1,
-      pageSize: 20,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF012_Employees_daily_statistics_Report",
-      {
-        params: {
-          limit: "15",
-          worker_name: "徐斌",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF012_Employees_daily_statistics_Report", {
+    limit: "15",
+    worker_name: "徐斌",
+  });
 
   const { code, data, message, description } = response;
 
@@ -208,29 +150,13 @@ export async function getDailyStaffProductionStatistic(): Promise<
 export async function getMonthStaffProductionStatistic(): Promise<
   NormalResponse<StaffProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF028_employe_monthly_output_tranfer_report",
-      criteria: '(statistical_month== "5" && employee == "周小春")',
-      page: 1,
-      pageSize: 20,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF028_employe_monthly_output_tranfer_report",
-      {
-        params: {
-          statistical_month: "5",
-          employee: "周小春",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF028_employe_monthly_output_tranfer_report",
+    {
+      statistical_month: "5",
+      employee: "周小春",
+    }
+  );
 
   const { code, data, message, description } = response;
 
@@ -269,29 +195,10 @@ export interface ProductionMachineStatistic extends ProductionStatistic {}
 export async function getDateProductionMachineStatistic(): Promise<
   NormalResponse<ProductionMachineStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_daily_equipment_output_statistical",
-      criteria: '(statistical_date == "2024-06-08" && process== "冷轧")',
-      page: 1,
-      pageSize: 200,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF026_daily_equipment_output_statistical",
-      {
-        params: {
-          statistical_date: "2024-06-08",
-          process: "冷轧",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF026_daily_equipment_output_statistical", {
+    statistical_date: "2024-06-08",
+    process: "冷轧",
+  });
 
   const { code, data, message, description } = response;
 
@@ -329,29 +236,10 @@ export async function getDateProductionMachineStatistic(): Promise<
 export async function getMonthProductionMachineStatistic(): Promise<
   NormalResponse<ProductionMachineStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_monthly_equipment_output_statistical",
-      criteria: '(statistical_month== "6" && process== "切割")',
-      page: 1,
-      pageSize: 200,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF026_monthly_equipment_output_statistical",
-      {
-        params: {
-          statistical_month: "6",
-          process: "切割",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF026_monthly_equipment_output_statistical", {
+    statistical_month: "6",
+    process: "切割",
+  });
 
   const { code, data, message, description } = response;
 
@@ -393,29 +281,10 @@ export interface StaffsProductionStatistic extends StaffProductionStatistic {
 export async function getDailyStaffsProductionStatistic(): Promise<
   NormalResponse<StaffsProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF028_employe_daily_output_tranfer_report",
-      criteria: '(statistical_date == "2024-06-24" && process== "准备内砂")',
-      page: 1,
-      pageSize: 200,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF028_employe_daily_output_tranfer_report",
-      {
-        params: {
-          statistical_date: "2024-06-24",
-          process: "准备内砂",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NF028_employe_output_tranfer_report", {
+    statistical_date: "2024-06-24",
+    process: "准备内砂",
+  });
 
   const { code, data, message, description } = response;
 
@@ -453,29 +322,13 @@ export async function getDailyStaffsProductionStatistic(): Promise<
 export async function getMonthStaffsProductionStatistic(): Promise<
   NormalResponse<StaffsProductionStatistic[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF028_employe_monthly_output_tranfer_report",
-      criteria: '(statistical_month == "6" && process== "热处理")',
-      page: 1,
-      pageSize: 200,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF028_employe_monthly_output_tranfer_report",
-      {
-        params: {
-          statistical_month: "6",
-          process: "热处理",
-        },
-      }
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF028_employe_monthly_output_tranfer_report",
+    {
+      statistical_month: "6",
+      process: "热处理",
+    }
+  );
 
   const { code, data, message, description } = response;
 

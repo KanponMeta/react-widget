@@ -1,4 +1,4 @@
-import request from "../request";
+import request from "../zetRequest";
 import { DescriptionsProps } from "antd";
 
 export interface ProcessLoad {
@@ -12,22 +12,9 @@ export interface ProcessLoad {
 export async function getProductLoadProcessData(): Promise<
   NormalResponse<ProcessLoad[]>
 > {
-  let response: any = null;
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF025_process_fuzai_production_statistics_Report",
-      page: 1,
-      pageSize: 200,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      "/NF025_process_fuzai_production_statistics_Report"
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF025_process_fuzai_production_statistics_Report"
+  );
 
   const { code, data, message, description } = response;
 
@@ -59,24 +46,12 @@ export async function getProductLoadProcessData(): Promise<
 export async function getLoadMonitorStatisticData(
   processType: string
 ): Promise<NormalResponse<DescriptionsProps["items"]>> {
-  let response: any = null;
-
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF025_process_fuzai_production_statistics_Report",
-      criteria: `(process== "${processType}")`,
-      page: 1,
-      pageSize: 10,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      `/NF025_process_fuzai_production_statistics_Report?process=${processType}`
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF025_process_fuzai_production_statistics_Report",
+    {
+      process: processType,
+    }
+  );
 
   const { code, data } = response;
 
@@ -143,24 +118,12 @@ export interface ProductionDuration {
 export async function getLoadMonitorProductioDurationData(
   processType: string
 ): Promise<NormalResponse<ProductionDuration[]>> {
-  let response: any = null;
-
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_equipment_fuzai_production_statistics_Report",
-      criteria: `(process== "${processType}")`,
-      page: 1,
-      pageSize: 100,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF026_equipment_fuzai_production_statistics_Report",
+    {
+      process: processType,
+    }
+  );
 
   const { code, data } = response;
 
@@ -198,24 +161,12 @@ export interface ProductionCount {
 export async function getLoadMonitorProductCountData(
   processType: string
 ): Promise<NormalResponse<ProductionCount[]>> {
-  let response: any = null;
-
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_equipment_fuzai_production_statistics_Report",
-      criteria: `(process== "${processType}")`,
-      page: 1,
-      pageSize: 100,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF026_equipment_fuzai_production_statistics_Report",
+    {
+      process: processType,
+    }
+  );
 
   const { code, data } = response;
 
@@ -252,24 +203,12 @@ export interface ProductionWeight {
 export async function getLoadMonitorProductWeightData(
   processType: string
 ): Promise<NormalResponse<ProductionWeight[]>> {
-  let response: any = null;
-
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NF026_equipment_fuzai_production_statistics_Report",
-      criteria: `(process== "${processType}")`,
-      page: 1,
-      pageSize: 100,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      `/NF026_equipment_fuzai_production_statistics_Report?process=${processType}`
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request(
+    "NF026_equipment_fuzai_production_statistics_Report",
+    {
+      process: processType,
+    }
+  );
 
   const { code, data } = response;
 
@@ -311,24 +250,10 @@ export interface ProcessCard {
 export async function getLoadMonitorProcessCardData(
   processType: string
 ): Promise<NormalResponse<ProcessCard[]>> {
-  let response: any = null;
-
-  if (process.env.NODE_ENV === "production") {
-    const config = {
-      reportName: "NS001_GYK_Process_Scanning_Report",
-      criteria: `(material_type == "生产中" &&Process== "${processType}")`,
-      page: 1,
-      pageSize: 100,
-    };
-
-    response = await ZOHO.CREATOR.API.getAllRecords(config);
-  } else {
-    const responseObj = await request.get(
-      `/NS001_GYK_Process_Scanning_Report?Process=${processType}&material_type=生产中`
-    );
-
-    response = responseObj.data;
-  }
+  const response = await request("NS001_GYK_Process_Scanning_Report", {
+    Process: processType,
+    material_type: "生产中",
+  });
 
   const { code, data } = response;
 
