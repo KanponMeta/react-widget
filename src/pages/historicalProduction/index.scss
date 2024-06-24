@@ -30,7 +30,18 @@
   }
 }
 
-.historical-production-count {
+.historical-production-statistic {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historical-production-count,
+.historical-production-meter,
+.historical-production-weight {
   width: 32%;
   height: 100%;
   display: flex;

@@ -1,25 +1,74 @@
 import type { ECOption } from "@/components/Echart/index";
-
+import {
+  ProductionStatistic,
+  getDailyProductionStatistic,
+  ProductionMachineStatistic,
+  getDateProductionMachineStatistic,
+  StaffsProductionStatistic,
+  getDailyStaffsProductionStatistic,
+} from "@/service/historicalProduction/index";
 interface BarData {
   id: number;
   category: string;
   value: number;
 }
 
-export const getProductionCountBarData = (): ECOption => {
-  const mockData: BarData[] = [
-    {
-      id: 1,
-      category: "2023",
-      value: 1903,
-    },
-    {
-      id: 2,
-      category: "2024",
-      value: 3278,
-    },
-  ];
+export const getProductionStatisticOptions = async (): Promise<
+  NormalResponse<{
+    countOption: ECOption;
+    meterOption: ECOption;
+    weightOption: ECOption;
+  }>
+> => {
+  let data: ProductionStatistic[] = [];
 
+  const result = await getDailyProductionStatistic();
+  data = result.data;
+
+  const countOption = getProductionCountBarData(
+    data.map((item: ProductionStatistic, index: number): BarData => {
+      return {
+        id: index,
+        category: item.day,
+        value: Number(item.count),
+      };
+    })
+  );
+
+  const meterOption = getProductionMeterBarData(
+    data.map((item: ProductionStatistic, index: number): BarData => {
+      return {
+        id: index,
+        category: item.day,
+        value: Number(item.meter),
+      };
+    })
+  );
+
+  const weightOption = getProductionWeightBarData(
+    data.map((item: ProductionStatistic, index: number): BarData => {
+      return {
+        id: index,
+        category: item.day,
+        value: Number(item.weight),
+      };
+    })
+  );
+
+  return new Promise((resolve) => {
+    resolve({
+      data: {
+        countOption,
+        meterOption,
+        weightOption,
+      },
+      success: true,
+      type: "success",
+    });
+  });
+};
+
+export const getProductionCountBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
@@ -30,7 +79,7 @@ export const getProductionCountBarData = (): ECOption => {
     },
     tooltip: {},
     dataset: {
-      source: mockData,
+      source: data,
     },
     xAxis: {
       type: "category",
@@ -118,20 +167,7 @@ export const getProductionCountBarData = (): ECOption => {
   };
 };
 
-export const getProductionMeterBarData = (): ECOption => {
-  const mockData: BarData[] = [
-    {
-      id: 1,
-      category: "2023",
-      value: 1903,
-    },
-    {
-      id: 2,
-      category: "2024",
-      value: 3278,
-    },
-  ];
-
+export const getProductionMeterBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
@@ -142,7 +178,7 @@ export const getProductionMeterBarData = (): ECOption => {
     },
     tooltip: {},
     dataset: {
-      source: mockData,
+      source: data,
     },
     xAxis: {
       type: "category",
@@ -230,20 +266,7 @@ export const getProductionMeterBarData = (): ECOption => {
   };
 };
 
-export const getProductionWeightBarData = (): ECOption => {
-  const mockData: BarData[] = [
-    {
-      id: 1,
-      category: "2023",
-      value: 1903,
-    },
-    {
-      id: 2,
-      category: "2024",
-      value: 3278,
-    },
-  ];
-
+export const getProductionWeightBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
@@ -254,7 +277,7 @@ export const getProductionWeightBarData = (): ECOption => {
     },
     tooltip: {},
     dataset: {
-      source: mockData,
+      source: data,
     },
     xAxis: {
       type: "category",
@@ -342,46 +365,14 @@ export const getProductionWeightBarData = (): ECOption => {
   };
 };
 
-export const getProductionMachineStatisticBarData = (): ECOption => {
-  const mockData: BarData[] = [
-    {
-      id: 1,
-      category: "设备1",
-      value: 2023,
-    },
-    {
-      id: 2,
-      category: "设备2",
-      value: 3278,
-    },
-    {
-      id: 3,
-      category: "设备3",
-      value: 2874,
-    },
-    {
-      id: 4,
-      category: "设备4",
-      value: 3902,
-    },
-    {
-      id: 5,
-      category: "设备5",
-      value: 1937,
-    },
-    {
-      id: 6,
-      category: "设备6",
-      value: 3633,
-    },
-    {
-      id: 7,
-      category: "设备7",
-      value: 2803,
-    },
-  ];
+export const getProductionMachineStatisticBarData = async (): Promise<
+  NormalResponse<ECOption>
+> => {
+  let data: ProductionMachineStatistic[] = [];
+  const result = await getDateProductionMachineStatistic();
+  data = result.data;
 
-  return {
+  const option: ECOption = {
     grid: {
       top: "20%",
       bottom: "10%", // 设置上边距百分比，实现垂直居上的效果
@@ -391,7 +382,13 @@ export const getProductionMachineStatisticBarData = (): ECOption => {
     },
     tooltip: {},
     dataset: {
-      source: mockData,
+      source: data.map((item: ProductionMachineStatistic, index: number) => {
+        return {
+          id: index,
+          category: item.day,
+          value: Number(item.count),
+        };
+      }),
     },
     xAxis: {
       type: "category",
@@ -477,48 +474,24 @@ export const getProductionMachineStatisticBarData = (): ECOption => {
       },
     ],
   };
+
+  return new Promise((resolve) => {
+    resolve({
+      data: option,
+      success: true,
+      type: "success",
+    });
+  });
 };
 
-export const getProductionStaffStatisticBarData = (): ECOption => {
-  const mockData: BarData[] = [
-    {
-      id: 1,
-      category: "员工1",
-      value: 2023,
-    },
-    {
-      id: 2,
-      category: "员工2",
-      value: 3278,
-    },
-    {
-      id: 3,
-      category: "员工3",
-      value: 2874,
-    },
-    {
-      id: 4,
-      category: "员工4",
-      value: 3902,
-    },
-    {
-      id: 5,
-      category: "员工5",
-      value: 1937,
-    },
-    {
-      id: 6,
-      category: "员工6",
-      value: 3633,
-    },
-    {
-      id: 7,
-      category: "员工7",
-      value: 2803,
-    },
-  ];
+export const getProductionStaffStatisticBarData = async (): Promise<
+  NormalResponse<ECOption>
+> => {
+  let data: StaffsProductionStatistic[] = [];
+  const result = await getDailyStaffsProductionStatistic();
+  data = result.data;
 
-  return {
+  const option: ECOption = {
     grid: {
       top: "20%",
       bottom: "10%", // 设置上边距百分比，实现垂直居上的效果
@@ -528,7 +501,13 @@ export const getProductionStaffStatisticBarData = (): ECOption => {
     },
     tooltip: {},
     dataset: {
-      source: mockData,
+      source: data.map((item: StaffsProductionStatistic, index: number) => {
+        return {
+          id: index,
+          category: item.day,
+          value: Number(item.count),
+        };
+      }),
     },
     xAxis: {
       type: "category",
@@ -614,4 +593,12 @@ export const getProductionStaffStatisticBarData = (): ECOption => {
       },
     ],
   };
+
+  return new Promise((resolve) => {
+    resolve({
+      data: option,
+      success: true,
+      type: "success",
+    });
+  });
 };

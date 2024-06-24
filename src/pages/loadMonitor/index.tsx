@@ -15,6 +15,7 @@ import {
   getLoadMonitorProcessCardData,
 } from "@/service/loadMonitor/index";
 
+import _ from "lodash";
 import { EChartsType } from "echarts/core";
 import { echartsInstance } from "@/components/Echart";
 import {
@@ -104,13 +105,10 @@ const ProductDuration: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = (option: any) => {
+    if (_.isEmpty(chartInstance)) {
       const chartElement = pieRef.current;
       chartInstance = echartsInstance.init(chartElement);
-
-      // 使用配置项绘制图表
-      chartInstance.setOption(option);
-    };
+    }
 
     const destroyChart = () => {
       if (chartInstance) {
@@ -120,7 +118,7 @@ const ProductDuration: React.FC = () => {
     };
 
     getMachineProductDurationPieOption().then((option) => {
-      createChart(option);
+      (chartInstance as EChartsType)?.setOption(option);
     });
 
     return () => {
@@ -144,12 +142,10 @@ const ProductCount: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = (option: any) => {
+    if (_.isEmpty(chartInstance)) {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
-
-      chartInstance.setOption(option);
-    };
+    }
 
     const destroyChart = () => {
       if (chartInstance) {
@@ -159,7 +155,7 @@ const ProductCount: React.FC = () => {
     };
 
     getMachineProductCountBarOption().then((option) => {
-      createChart(option);
+      (chartInstance as EChartsType)?.setOption(option);
     });
 
     return () => {
@@ -183,14 +179,10 @@ const ProductWeight: React.FC = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = (option: any) => {
+    if (_.isEmpty(chartInstance)) {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
-
-      // 使用配置项绘制图表
-      console.log("createChart", option);
-      chartInstance.setOption(option);
-    };
+    }
 
     const destroyChart = () => {
       if (chartInstance) {
@@ -200,7 +192,7 @@ const ProductWeight: React.FC = () => {
     };
 
     getMachineProductWeightBarOption().then((option) => {
-      createChart(option);
+      (chartInstance as EChartsType)?.setOption(option);
     });
 
     return () => {
@@ -295,12 +287,10 @@ const Process: React.FC<{ data: any[] }> = () => {
   useEffect(() => {
     let chartInstance: EChartsType | null = null;
 
-    const createChart = (options: any) => {
+    if (_.isEmpty(chartInstance)) {
       const chartElement = barRef.current;
       chartInstance = echartsInstance.init(chartElement);
-
-      chartInstance.setOption(options);
-    };
+    }
 
     const destroyChart = () => {
       if (chartInstance) {
@@ -311,8 +301,7 @@ const Process: React.FC<{ data: any[] }> = () => {
 
     generateProcessBarOption(loadType)
       .then((options) => {
-        console.log("Process", options);
-        createChart(options);
+        chartInstance?.setOption(options);
       })
       .catch((err: any) => {
         console.log(err);
