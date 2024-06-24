@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import _ from "lodash";
 
 import {
   getProductionStatisticOptions,
@@ -8,9 +9,17 @@ import {
 
 import { EChartsType } from "echarts/core";
 import { echartsInstance } from "@/components/Echart";
-import _ from "lodash";
+// import { ConfigProvider, CascaderProps, Cascader, Space } from "antd";
+import { ConfigProvider, Space } from "antd";
 
+import cs from "classnames";
 import "./index.scss";
+
+// interface Option {
+//   value: string;
+//   label: string;
+//   children?: Option[];
+// }
 
 const ProductionStatistic: React.FC = () => {
   const countRef = useRef(null);
@@ -59,10 +68,66 @@ const ProductionStatistic: React.FC = () => {
     };
   }, []);
 
+  // const options: Option[] = [
+  //   {
+  //     value: "zhejiang",
+  //     label: "Zhejiang",
+  //     children: [
+  //       {
+  //         value: "hangzhou",
+  //         label: "Hangzhou",
+  //         children: [
+  //           {
+  //             value: "xihu",
+  //             label: "West Lake",
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     value: "jiangsu",
+  //     label: "Jiangsu",
+  //     children: [
+  //       {
+  //         value: "nanjing",
+  //         label: "Nanjing",
+  //         children: [
+  //           {
+  //             value: "zhonghuamen",
+  //             label: "Zhong Hua Men",
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  // const onChange: CascaderProps<Option>["onChange"] = (value) => {
+  //   console.log(value);
+  // };
+
   return (
     <div className="historical-production-statistic">
       <div className="historical-production-count">
         <div className="historical-production-count-title">生产支数统计</div>
+        <div className="historical-production-count-operation">
+          {/* <Space>
+            <Cascader
+              size="small"
+              options={options}
+              onChange={onChange}
+              placeholder="Please select"
+              style={{borderColor: "#fff"}}
+            />
+            <Cascader
+              size="small"
+              options={options}
+              onChange={onChange}
+              placeholder="Please select"
+            />{" "}
+          </Space> */}
+        </div>
         <div className="historical-production-count-echart">
           <div
             className="historical-production-count-echart-bar"
@@ -177,16 +242,67 @@ const ProductionStaffStatistic: React.FC = () => {
 };
 
 const HistoricalProduction: React.FC = () => {
+  const historyDuration = [
+    {
+      key: "year",
+      value: "年度统计",
+    },
+    {
+      key: "quarter",
+      value: "季度统计",
+    },
+    {
+      key: "month",
+      value: "月度统计",
+    },
+    {
+      key: "day",
+      value: "每日统计",
+    },
+  ];
+  const [currentHistoryDuration, setCurrentHistoryDuration] =
+    useState<string>("day");
+
   return (
-    <div className="historical-production">
-      <div className="historical-production-top">
-        <ProductionStatistic />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorBgContainer: "#000E62",
+          colorBorder: "#000E62",
+        },
+        components: {
+          Cascader: {
+            controlItemWidth: 50,
+            controlWidth: 100,
+            optionSelectedBg: "red",
+          },
+        },
+      }}
+    >
+      <div className="historical-production">
+        <div className="historical-production-top">
+          <ProductionStatistic />
+        </div>
+        <div className="historical-production-middle">
+          <ProductionMachineStatistic />
+          <ProductionStaffStatistic />
+        </div>
+        <Space className="historical-production-bottom" size="large">
+          {historyDuration.map((item) => (
+            <div
+              className={cs(
+                "historical-production-bottom-item",
+                currentHistoryDuration === item.key && "active"
+              )}
+              key={item.key}
+              onClick={() => setCurrentHistoryDuration(item.key)}
+            >
+              {item.value}
+            </div>
+          ))}
+        </Space>
       </div>
-      <div className="historical-production-bottom">
-        <ProductionMachineStatistic />
-        <ProductionStaffStatistic />
-      </div>
-    </div>
+    </ConfigProvider>
   );
 };
 

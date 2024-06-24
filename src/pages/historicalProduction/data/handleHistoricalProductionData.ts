@@ -5,7 +5,7 @@ import {
   ProductionMachineStatistic,
   getDateProductionMachineStatistic,
   StaffsProductionStatistic,
-  getDailyStaffsProductionStatistic,
+  getMonthStaffsProductionStatistic,
 } from "@/service/historicalProduction/index";
 interface BarData {
   id: number;
@@ -72,7 +72,7 @@ export const getProductionCountBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
-      bottom: "10%", // 设置上边距百分比，实现垂直居上的效果
+      bottom: "20%", // 设置上边距百分比，实现垂直居上的效果
     },
     textStyle: {
       color: "#fff",
@@ -90,6 +90,7 @@ export const getProductionCountBarData = (data: BarData[]): ECOption => {
         showMinLabel: true,
         interval: 0,
         color: "#fff",
+        rotate: 30,
       },
     },
     yAxis: {
@@ -171,7 +172,7 @@ export const getProductionMeterBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
-      bottom: "10%", // 设置上边距百分比，实现垂直居上的效果
+      bottom: "20%", // 设置上边距百分比，实现垂直居上的效果
     },
     textStyle: {
       color: "#fff",
@@ -189,6 +190,7 @@ export const getProductionMeterBarData = (data: BarData[]): ECOption => {
         showMinLabel: true,
         interval: 0,
         color: "#fff",
+        rotate: 30,
       },
     },
     yAxis: {
@@ -270,7 +272,7 @@ export const getProductionWeightBarData = (data: BarData[]): ECOption => {
   return {
     grid: {
       top: "20%",
-      bottom: "10%", // 设置上边距百分比，实现垂直居上的效果
+      bottom: "20%", // 设置上边距百分比，实现垂直居上的效果
     },
     textStyle: {
       color: "#fff",
@@ -288,6 +290,7 @@ export const getProductionWeightBarData = (data: BarData[]): ECOption => {
         showMinLabel: true,
         interval: 0,
         color: "#fff",
+        rotate: 30,
       },
     },
     yAxis: {
@@ -385,7 +388,7 @@ export const getProductionMachineStatisticBarData = async (): Promise<
       source: data.map((item: ProductionMachineStatistic, index: number) => {
         return {
           id: index,
-          category: item.day,
+          category: item.equipment,
           value: Number(item.count),
         };
       }),
@@ -488,7 +491,7 @@ export const getProductionStaffStatisticBarData = async (): Promise<
   NormalResponse<ECOption>
 > => {
   let data: StaffsProductionStatistic[] = [];
-  const result = await getDailyStaffsProductionStatistic();
+  const result = await getMonthStaffsProductionStatistic();
   data = result.data;
 
   const option: ECOption = {
@@ -500,11 +503,17 @@ export const getProductionStaffStatisticBarData = async (): Promise<
       color: "#fff",
     },
     tooltip: {},
+    dataZoom: [
+      {
+        type: "inside",
+        end: 10,
+      },
+    ],
     dataset: {
       source: data.map((item: StaffsProductionStatistic, index: number) => {
         return {
           id: index,
-          category: item.day,
+          category: item.staff,
           value: Number(item.count),
         };
       }),

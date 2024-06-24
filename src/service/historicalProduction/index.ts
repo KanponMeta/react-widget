@@ -396,7 +396,8 @@ export async function getDailyStaffsProductionStatistic(): Promise<
   let response: any = null;
   if (process.env.NODE_ENV === "production") {
     const config = {
-      reportName: "NF025_process_fuzai_production_statistics_Report",
+      reportName: "NF028_employe_daily_output_tranfer_report",
+      criteria: '(statistical_date == "2024-06-24" && process== "准备内砂")',
       page: 1,
       pageSize: 200,
     };
@@ -404,7 +405,13 @@ export async function getDailyStaffsProductionStatistic(): Promise<
     response = await ZOHO.CREATOR.API.getAllRecords(config);
   } else {
     const responseObj = await request.get(
-      "/NF025_process_fuzai_production_statistics_Report"
+      "/NF028_employe_daily_output_tranfer_report",
+      {
+        params: {
+          statistical_date: "2024-06-24",
+          process: "准备内砂",
+        },
+      }
     );
 
     response = responseObj.data;
@@ -449,7 +456,8 @@ export async function getMonthStaffsProductionStatistic(): Promise<
   let response: any = null;
   if (process.env.NODE_ENV === "production") {
     const config = {
-      reportName: "NF025_process_fuzai_production_statistics_Report",
+      reportName: "NF028_employe_monthly_output_tranfer_report",
+      criteria: '(statistical_month == "6" && process== "热处理")',
       page: 1,
       pageSize: 200,
     };
@@ -457,7 +465,13 @@ export async function getMonthStaffsProductionStatistic(): Promise<
     response = await ZOHO.CREATOR.API.getAllRecords(config);
   } else {
     const responseObj = await request.get(
-      "/NF025_process_fuzai_production_statistics_Report"
+      "/NF028_employe_monthly_output_tranfer_report",
+      {
+        params: {
+          statistical_month: "6",
+          process: "热处理",
+        },
+      }
     );
 
     response = responseObj.data;
